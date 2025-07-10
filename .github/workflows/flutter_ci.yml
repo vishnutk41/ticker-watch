@@ -1,31 +1,40 @@
+# 🏷️ Workflow Name: Shown in the GitHub UI under the Actions tab
 name: Build Flutter APK
 
+# 🚀 Trigger: Runs the workflow every time there's a push to the 'main' branch
 on:
   push:
     branches:
       - main
 
+# 🔨 Jobs: Defines a job named 'build-apk'
 jobs:
   build-apk:
+    # 📦 Runner Environment: Uses Ubuntu as the virtual machine to run the job
     runs-on: ubuntu-latest
 
     steps:
+      # ✅ Step 1: Checkout the source code from the repo
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # ✅ Step 2: Set up the Flutter SDK on the runner
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.5'  # ✅ includes Dart ≥ 3.7.2
+          flutter-version: '3.32.5'  # 📌 Use your desired Flutter version (includes Dart ≥ 3.7.2)
 
+      # ✅ Step 3: Install all dependencies listed in pubspec.yaml
       - name: Install dependencies
         run: flutter pub get
 
+      # ✅ Step 4: Build the release APK for Android
       - name: Build APK
         run: flutter build apk --release
 
+      # ✅ Step 5: Upload the built APK as an artifact to GitHub (can be downloaded later)
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: app-release.apk                        # 🎯 Artifact name in GitHub UI
+          path: build/app/outputs/flutter-apk/app-release.apk  # 📁 Path to the generated APK
