@@ -27,6 +27,9 @@ jobs:
       # ✅ Step 3: Install all dependencies listed in pubspec.yaml
       - name: Install dependencies
         run: flutter pub get
+              
+      - name: Run tests  # ✅ Step 4: Run all unit and widget tests (in the `test/` directory)
+        run: flutter test
 
       # ✅ Step 4: Build the release APK for Android
       - name: Build APK
