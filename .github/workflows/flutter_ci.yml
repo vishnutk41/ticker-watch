@@ -1,13 +1,22 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build-apk:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.5' # ✅ Dart ≥ 3.7.2
+          flutter-version: '3.32.5'  # ✅ includes Dart ≥ 3.7.2
 
       - name: Install dependencies
         run: flutter pub get
@@ -15,7 +24,7 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
